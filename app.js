@@ -37,10 +37,34 @@ const getCoins = async () => {
     console.log('---------------------------------------------'.yellow)
     console.log(coinData[1])
     console.log('---------------------------------------------'.yellow)
+    setCoins(coinData)
     return coinData
   } catch (err) {
     console.log(err)
   }
+}
+
+const setCoins = async (coinData) => {
+
+  const CoinSchema = new mongoose.Schema({
+    id: String,
+    symbol: String,
+    name: String,
+    image: String,
+    current_price: String
+  })
+
+  const Coin = mongoose.model("coins", CoinSchema)
+
+  const newCoin = new Coin({
+    id: coinData[1].id,
+    symbol: coinData[1].symbol,
+    name: coinData[1].name,
+    image: coinData[1].image,
+    current_price: coinData[1].current_price
+  })
+
+  await newCoin.save().then(() => console.log("New coin added."))
 }
 
 app.get('/', async (req, res) => {
