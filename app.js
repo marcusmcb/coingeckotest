@@ -31,8 +31,7 @@ const getCoins = async () => {
     let response = await req.json();
     for (let i = 0; i < response.length; i++) {
       coinData.push(response[i]);
-    }
-    console.log("MONGO KEY: ", process.env.MONGO_PROD_URI);
+    }    
     console.log("DATA SAMPLE BELOW:".cyan);
     console.log("---------------------------------------------".yellow);
     console.log(coinData[1]);
