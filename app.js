@@ -24,7 +24,7 @@ mongoose
 
 let coinData = []
 
-// schema for token data
+// schema for each token's data
 const CoinSchema = new mongoose.Schema({
   id: String,
   symbol: String,
@@ -57,7 +57,7 @@ const getCoins = async () => {
 
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
-  mongoose.connection.db.dropCollection('coins', (err, result) => {
+  await mongoose.connection.db.dropCollection('coins', (err, result) => {
     if (result) {
       console.log('MongoDB collection COINS dropped.')
       console.log('---------------------------------------------'.yellow)
@@ -74,24 +74,24 @@ const setCoins = async (coinData) => {
       image: coinData[i].image,
       current_price: coinData[i].current_price,
     })
-    await newCoin
+    newCoin
       .save()
       .then(() => console.log('New coin added: ', coinData[i].name))
   }
 }
 
+const getCoinData = async () => {
+  const filter = {}
+  await Coin.find(filter).then(data => {
+    console.log("DATA: ", data)
+  })
+}
+
 app.get('/', async (req, res) => {
-  await getCoins()
+  getCoins()
   const filter = {}
   await Coin.find(filter).then(data => res.send(data))
   console.log("*** MONGODB QUERY EXECUTED ***")  
-})
-
-app.get('/coins', async (req, res) => {
-  const filter = {}
-  const response = await Coin.find(filter)
-  console.log("*** MONGODB QUERY EXECUTED ***")
-  res.send(response)
 })
 
 app.listen(PORT, () => {
