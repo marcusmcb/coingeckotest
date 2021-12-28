@@ -9,7 +9,7 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// mongodb connection
+// mongo cluster connection
 mongoose
   .connect(process.env.MONGO_PROD_URI, {
     useNewUrlParser: true,
@@ -22,6 +22,7 @@ mongoose
   })
   .catch((err) => console.log(err))
 
+// global var to move data from api to mongo cluster
 let coinData = []
 
 // schema for each token's data
@@ -35,7 +36,7 @@ const CoinSchema = new mongoose.Schema({
 
 const Coin = mongoose.model('coins', CoinSchema)
 
-// clear mongo collection
+// clear mongo collection from db
 const clearDb = async () => {
   await mongoose.connection.db.dropCollection('coins', (err, result) => {
     if (result) {
@@ -81,13 +82,13 @@ const setCoins = async (coinData) => {
     await newCoin
       .save()
       .then(() => console.log('New coin added: ', coinData[i].name))
-  }
-  const filter = {}  
+  }   
 }
 
 app.get('/', async (req, res) => {
   const filter = {}
-  await getCoins()  
+  await getCoins()
+  // query all from collection & return data as response  
   await Coin.find(filter).then(data => {
     console.log('---------------------------------------------'.yellow)
     console.log("GETCOINDATA: ", data)
