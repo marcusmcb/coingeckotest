@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import colors from 'colors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -82,6 +83,8 @@ const setCoins = async (coinData) => {
       .then(() => console.log('New coin added: ', coinData[i].name))
   }   
 }
+
+app.use(cors())
 
 app.get('/', async (req, res) => {
   const filter = {}
