@@ -35,8 +35,21 @@ const CoinSchema = new mongoose.Schema({
 
 const Coin = mongoose.model('coins', CoinSchema)
 
+// clear mongo collection
+const clearDb = async () => {
+  await mongoose.connection.db.dropCollection('coins', (err, result) => {
+    if (result) {
+      console.log('MongoDB collection COINS dropped.')
+      console.log('---------------------------------------------'.yellow)
+    } else {
+      console.log(err)
+    }
+  }) 
+}
+
 // fetch token data from API
 const getCoins = async () => {
+  clearDb()  
   try {
     let req = await fetch(
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=volume_desc&per_page=99&page=1&sparkline=true'
@@ -47,9 +60,8 @@ const getCoins = async () => {
     }
     console.log('---------------------------------------------'.yellow)
     console.log('*** API DATA RETURNED ***'.cyan)
-    console.log('---------------------------------------------'.yellow)
-    setCoins(coinData)
-    return coinData
+    console.log('---------------------------------------------'.yellow)    
+    return setCoins(coinData)        
   } catch (err) {
     console.log(err)
   }
@@ -57,15 +69,6 @@ const getCoins = async () => {
 
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
-  await mongoose.connection.db.dropCollection('coins', (err, result) => {
-    if (result) {
-      console.log('MongoDB collection COINS dropped.')
-      console.log('---------------------------------------------'.yellow)
-    } else {
-      console.log(err)
-    }
-  })  
-
   for (let i = 0; i < 10; i++) {
     let newCoin = new Coin({
       id: coinData[i].id,
@@ -74,24 +77,37 @@ const setCoins = async (coinData) => {
       image: coinData[i].image,
       current_price: coinData[i].current_price,
     })
-    newCoin
+    await newCoin
       .save()
       .then(() => console.log('New coin added: ', coinData[i].name))
   }
-}
-
-const getCoinData = async () => {
   const filter = {}
   await Coin.find(filter).then(data => {
-    console.log("DATA: ", data)
+    console.log('---------------------------------------------'.yellow)
+    console.log("GETCOINDATA: ", data)
+    console.log('---------------------------------------------'.yellow)
+    return data
   })
 }
 
+// const getCoinData = async () => {
+//   console.log("HERE")
+//   const filter = {}
+//   await Coin.find(filter).then(data => {
+//     console.log("GETCOINDATA: ", data)
+//     return data
+//   })
+// }
+
 app.get('/', async (req, res) => {
-  getCoins()
-  const filter = {}
-  await Coin.find(filter).then(data => res.send(data))
-  console.log("*** MONGODB QUERY EXECUTED ***")  
+  let response = await getCoins()
+  console.log("WHERE WE AT? ", response)  
+  // getCoinData()
+  // const filter = {}
+  // await Coin.find(filter).then(data => {    
+  //   res.send(data)
+  // })
+  // console.log("*** MONGODB QUERY EXECUTED ***")  
 })
 
 app.listen(PORT, () => {
