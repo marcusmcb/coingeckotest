@@ -26,8 +26,7 @@ mongoose
 let coinData = []
 
 // schema for each token's data
-const CoinSchema = new mongoose.Schema({
-  id: String,
+const CoinSchema = new mongoose.Schema({  
   symbol: String,
   name: String,
   image: String,
@@ -72,8 +71,7 @@ const getCoins = async () => {
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
   for (let i = 0; i < 10; i++) {
-    let newCoin = new Coin({
-      id: coinData[i].id,
+    let newCoin = new Coin({      
       symbol: coinData[i].symbol,
       name: coinData[i].name,
       image: coinData[i].image,
