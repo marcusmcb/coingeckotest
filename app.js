@@ -49,7 +49,7 @@ const clearDb = async () => {
 
 // fetch token data from API
 const getCoins = async () => {
-  clearDb()  
+  await clearDb()  
   try {
     let req = await fetch(
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=volume_desc&per_page=99&page=1&sparkline=true'
@@ -61,7 +61,8 @@ const getCoins = async () => {
     console.log('---------------------------------------------'.yellow)
     console.log('*** API DATA RETURNED ***'.cyan)
     console.log('---------------------------------------------'.yellow)    
-    return setCoins(coinData)        
+    await setCoins(coinData)
+    return        
   } catch (err) {
     console.log(err)
   }
@@ -81,33 +82,18 @@ const setCoins = async (coinData) => {
       .save()
       .then(() => console.log('New coin added: ', coinData[i].name))
   }
+  const filter = {}  
+}
+
+app.get('/', async (req, res) => {
   const filter = {}
+  await getCoins()  
   await Coin.find(filter).then(data => {
     console.log('---------------------------------------------'.yellow)
     console.log("GETCOINDATA: ", data)
     console.log('---------------------------------------------'.yellow)
-    return data
-  })
-}
-
-// const getCoinData = async () => {
-//   console.log("HERE")
-//   const filter = {}
-//   await Coin.find(filter).then(data => {
-//     console.log("GETCOINDATA: ", data)
-//     return data
-//   })
-// }
-
-app.get('/', async (req, res) => {
-  let response = await getCoins()
-  console.log("WHERE WE AT? ", response)  
-  // getCoinData()
-  // const filter = {}
-  // await Coin.find(filter).then(data => {    
-  //   res.send(data)
-  // })
-  // console.log("*** MONGODB QUERY EXECUTED ***")  
+    res.send(data)
+  })   
 })
 
 app.listen(PORT, () => {
