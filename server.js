@@ -61,6 +61,7 @@ const getCoins = async () => {
     }
     console.log('---------------------------------------------'.yellow)
     console.log('*** API DATA RETURNED ***'.cyan)
+    console.log("*** SAMPLE ***: ", coinData[1])
     console.log('---------------------------------------------'.yellow)    
     await setCoins(coinData)
     return        
@@ -71,7 +72,7 @@ const getCoins = async () => {
 
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     let newCoin = new Coin({      
       symbol: coinData[i].symbol,
       name: coinData[i].name,
@@ -84,8 +85,10 @@ const setCoins = async (coinData) => {
   }   
 }
 
+// cors middleware
 app.use(cors())
 
+// default endpoint to fetch api data & return it to client
 app.get('/', async (req, res) => {
   const filter = {}
   await getCoins()
