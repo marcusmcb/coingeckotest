@@ -1,16 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
 
-const App = () => { 
-  
+const App = () => {
   const [coinData, setCoinData] = useState({})
   const [isBusy, setIsBusy] = useState(true)
 
   useEffect(() => {
     const getCoins = async () => {
       try {
-        let req = await fetch("http://localhost:5000")
+        let req = await fetch('http://localhost:5000')
         let response = await req.json()
         return response
       } catch (err) {
@@ -31,25 +29,29 @@ const App = () => {
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">            
-        <div>
-          {isBusy ? (
-            <p>Loading...</p>
-          ) : (
-            <Fragment>
-              <div>
-              <h1>Data</h1>
-              <p>Symbol: {coinData[1].symbol}</p>            
-              <p>Name: {coinData[1].name}</p>            
-              <p>Price: {coinData[1].current_price}</p>                          
-              </div>
-            </Fragment>          
-          )}
-        </div>
-      </header>
+    <div className='App'>
+      <div>
+        {isBusy ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {coinData.map((coin, i) => (
+              <Fragment>
+                <div key={i}>
+                  <h3>Info:</h3>
+                  <p>Symbol: {coin.symbol.toUpperCase()}</p>
+                  <p>Name: {coin.name}</p>
+                  <p>Price: {coin.current_price.toLocaleString()}</p>
+                  <img src={coin.image} />
+                  <hr />
+                </div>
+              </Fragment>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
