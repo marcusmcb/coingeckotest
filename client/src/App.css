@@ -8,6 +8,19 @@
   align-items: center;  
 }
 
+.main-panel {  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.coin-panel {
+  border: 1px solid grey;
+  margin: 12px;
+  padding: 20px;
+  background-color: #41454e;
+}
+
 img {
   border-radius: 20px;
   width: 100px;

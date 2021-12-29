@@ -34,16 +34,14 @@ const App = () => {
         {isBusy ? (
           <p>Loading...</p>
         ) : (
-          <div>
+          <div className='main-panel'>
             {coinData.map((coin, i) => (
               <Fragment>
-                <div key={i}>
-                  <h3>Info:</h3>
-                  <p>Symbol: {coin.symbol.toUpperCase()}</p>
-                  <p>Name: {coin.name}</p>
-                  <p>Price: {coin.current_price.toLocaleString()}</p>
-                  <img src={coin.image} />
-                  <hr />
+                <div className="coin-panel" key={i}>                  
+                <p>{coin.name} | {coin.symbol.toUpperCase()}</p>
+                  
+                  <p>${coin.current_price.toLocaleString()}</p>
+                  <img src={coin.image} alt=""/>                  
                 </div>
               </Fragment>
             ))}
