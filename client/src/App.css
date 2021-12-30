@@ -3,12 +3,12 @@
   background-color: #282c34;
   color: white;
   display: flex;
-  min-height: 100vh;  
+  min-height: 100vh;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
 }
 
-.main-panel {  
+.main-panel {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

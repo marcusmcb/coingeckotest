@@ -37,11 +37,12 @@ const App = () => {
           <div className='main-panel'>
             {coinData.map((coin, i) => (
               <Fragment>
-                <div className="coin-panel" key={i}>                  
-                <p>{coin.name} | {coin.symbol.toUpperCase()}</p>
-                  
+                <div className='coin-panel' key={i}>
+                  <p>
+                    {coin.name} | {coin.symbol.toUpperCase()}
+                  </p>
                   <p>${coin.current_price.toLocaleString()}</p>
-                  <img src={coin.image} alt=""/>                  
+                  <img src={coin.image} alt='' />
                 </div>
               </Fragment>
             ))}
