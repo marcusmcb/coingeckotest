@@ -30,25 +30,23 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div>
-        {isBusy ? (
-          <p>Loading...</p>
-        ) : (
-          <div className='main-panel'>
-            {coinData.map((coin, i) => (
-              <Fragment>
-                <div className='coin-panel' key={i}>
-                  <p>
-                    {coin.name} | {coin.symbol.toUpperCase()}
-                  </p>
-                  <p>${coin.current_price.toLocaleString()}</p>
-                  <img src={coin.image} alt='' />
-                </div>
-              </Fragment>
-            ))}
-          </div>
-        )}
-      </div>
+      {isBusy ? (
+        <p>Loading...</p>
+      ) : (
+        <div className='main-panel'>
+          {coinData.map((coin, i) => (
+            <Fragment key={i}>
+              <div className='coin-panel'>
+                <p>
+                  {coin.name} | {coin.symbol.toUpperCase()}
+                </p>
+                <p>${coin.current_price.toLocaleString()}</p>
+                <img src={coin.image} alt='' />
+              </div>
+            </Fragment>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

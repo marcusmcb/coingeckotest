@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cors from 'cors'
 
+import { getCoins } from './modules/getCoins.js'
+
 dotenv.config()
 
 const app = express()
@@ -23,9 +25,6 @@ mongoose
   })
   .catch((err) => console.log(err))
 
-// global var to move data from api to mongo cluster
-let coinData = []
-
 // schema for each token's data
 const CoinSchema = new mongoose.Schema({  
   symbol: String,
@@ -35,40 +34,6 @@ const CoinSchema = new mongoose.Schema({
 })
 
 const Coin = mongoose.model('coins', CoinSchema)
-
-// clear mongo collection from db
-const clearDb = async () => {
-  await mongoose.connection.db.dropCollection('coins', (err, result) => {
-    if (result) {
-      console.log('MongoDB collection COINS dropped.')
-      console.log('---------------------------------------------'.yellow)
-    } else {
-      console.log(err)
-    }
-  }) 
-}
-
-// fetch token data from API
-const getCoins = async () => {
-  await clearDb()  
-  try {
-    let req = await fetch(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=volume_desc&per_page=99&page=1&sparkline=true'
-    )
-    let response = await req.json()
-    for (let i = 0; i < response.length; i++) {
-      coinData.push(response[i])
-    }
-    console.log('---------------------------------------------'.yellow)
-    console.log('*** API DATA RETURNED ***'.cyan)
-    console.log("*** SAMPLE ***: ", coinData[1])
-    console.log('---------------------------------------------'.yellow)    
-    await setCoins(coinData)
-    return        
-  } catch (err) {
-    console.log(err)
-  }
-}
 
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
@@ -91,7 +56,8 @@ app.use(cors())
 // default endpoint to fetch api data & return it to client
 app.get('/', async (req, res) => {
   const filter = {}
-  await getCoins()
+  let apiData = await getCoins()
+  await setCoins(apiData)
   // query all from collection & return data as response  
   await Coin.find(filter).then(data => {
     console.log('---------------------------------------------'.yellow)
