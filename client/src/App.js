@@ -31,7 +31,11 @@ const App = () => {
   return (
     <div className='App'>
       {isBusy ? (
-        <p>Loading...</p>
+        <div className='loading-body'>
+          <div className='container alignment'>
+            <div className='box alignment'></div>
+          </div>
+        </div>
       ) : (
         <div className='main-panel'>
           {coinData.map((coin, i) => (
