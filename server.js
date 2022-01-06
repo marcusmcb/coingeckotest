@@ -30,7 +30,10 @@ const CoinSchema = new mongoose.Schema({
   symbol: String,
   name: String,
   image: String,
-  current_price: String,
+  current_price: Number,
+  price_change_24h: Number,
+  price_change_percentage_24h: Number,
+  sparkline_data: []
 })
 
 const Coin = mongoose.model('coins', CoinSchema)
@@ -43,6 +46,9 @@ const setCoins = async (coinData) => {
       name: coinData[i].name,
       image: coinData[i].image,
       current_price: coinData[i].current_price,
+      price_change_24h: coinData[i].price_change_24h,
+      price_change_percentage_24h: coinData[i].price_change_percentage_24h,
+      sparkline_data: coinData[i].sparkline_in_7d.price
     })
     await newCoin
       .save()
