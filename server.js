@@ -1,5 +1,4 @@
 import express from 'express'
-import fetch from 'node-fetch'
 import colors from 'colors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
