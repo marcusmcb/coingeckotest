@@ -31,8 +31,8 @@ const App = () => {
   return (
     <div className='App'>
       {isBusy ? (
-        <div className='loading-body'>
-          <div className='container alignment'>
+        <div className='loading-body'>          
+          <div className='container alignment'>            
             <div className='box alignment'></div>
           </div>
         </div>
