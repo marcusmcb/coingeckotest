@@ -16,9 +16,12 @@ export async function getCoins() {
       coinData.push(response[i])
     }
     console.log('---------------------------------------------'.yellow)
-    console.log('*** API DATA RETURNED ***'.cyan)
-    console.log("*** SAMPLE ***: ", coinData[1])
+    console.log('*** API Data Returned ***'.cyan)    
+    console.log('---------------------------------------------'.yellow)
+    console.log("*** SAMPLE DATA BELOW ***".yellow)
     console.log('---------------------------------------------'.yellow)    
+    console.log(coinData[1])
+    console.log('---------------------------------------------'.yellow)
     return coinData        
   } catch (err) {
     console.log(err)

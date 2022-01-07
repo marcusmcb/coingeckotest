@@ -19,7 +19,7 @@ mongoose
   })
   .then(() => {
     console.log('---------------------------------------------'.yellow)
-    console.log('*** MongoDB Cluster CONNECTED ***'.underline.magenta)
+    console.log('*** MongoDB Cluster CONNECTED ***'.magenta)
     console.log('---------------------------------------------'.yellow)
   })
   // future dev - proper error handling module
@@ -53,7 +53,7 @@ const setCoins = async (coinData) => {
     // future dev - proper error handling module
     await newCoin
       .save()
-      .then(() => console.log('New coin added: ', coinData[i].name))
+      .then(() => console.log('New coin added: '.yellow, coinData[i].name))
   }   
 }
 
@@ -68,7 +68,9 @@ app.get('/', async (req, res) => {
   // query all from collection & return data as response  
   await Coin.find(filter).then(data => {
     console.log('---------------------------------------------'.yellow)
-    console.log("GETCOINDATA: ", data)
+    console.log("EXPRESS DATA RETURNED (Sample Below)".green)
+    console.log('---------------------------------------------'.yellow)
+    console.log(data[1])
     console.log('---------------------------------------------'.yellow)
     res.send(data)
   })   
