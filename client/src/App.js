@@ -12,6 +12,7 @@ const App = () => {
         let response = await req.json()
         return response
       } catch (err) {
+        // future dev - proper error handling module
         return err
       }
     }

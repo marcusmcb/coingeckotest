@@ -22,6 +22,7 @@ mongoose
     console.log('*** MongoDB Cluster CONNECTED ***'.underline.magenta)
     console.log('---------------------------------------------'.yellow)
   })
+  // future dev - proper error handling module
   .catch((err) => console.log(err))
 
 // schema for each token's data
@@ -49,6 +50,7 @@ const setCoins = async (coinData) => {
       price_change_percentage_24h: coinData[i].price_change_percentage_24h,
       sparkline_data: coinData[i].sparkline_in_7d.price
     })
+    // future dev - proper error handling module
     await newCoin
       .save()
       .then(() => console.log('New coin added: ', coinData[i].name))
