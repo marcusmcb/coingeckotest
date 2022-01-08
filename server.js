@@ -53,7 +53,7 @@ const setCoins = async (coinData) => {
       price_change_percentage_24h: coinData[i].price_change_percentage_24h,
       sparkline_data: coinData[i].sparkline_in_7d.price
     })
-    // future dev - proper error handling module
+    // *** error handling if mongo save fails ***
     await newCoin
       .save()
       .then(() => console.log('New coin added: '.yellow, coinData[i].name))
