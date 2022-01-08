@@ -43,6 +43,7 @@ const Coin = mongoose.model('coins', CoinSchema)
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
   for (let i = 0; i < 20; i++) {
+    // *** check returned data for null values ***
     let newCoin = new Coin({      
       symbol: coinData[i].symbol,
       name: coinData[i].name,
@@ -65,6 +66,7 @@ app.use(cors())
 // default endpoint to fetch api data & return it to client
 app.get('/', async (req, res) => {
   const filter = {}
+  // *** check for error in return here ***
   let apiData = await getCoins()
   await setCoins(apiData)
   // query all from collection & return data as response  

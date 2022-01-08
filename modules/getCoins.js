@@ -12,6 +12,7 @@ export async function getCoins() {
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=volume_desc&per_page=99&page=1&sparkline=true'
     )
     let response = await req.json()
+    // check for response.error here and return error to server if so
     for (let i = 0; i < response.length; i++) {
       coinData.push(response[i])
     }
