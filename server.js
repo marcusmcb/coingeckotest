@@ -81,3 +81,5 @@ app.listen(PORT, () => {
   console.log(`*** Express App listening on PORT ${PORT} ***`.cyan)
   console.log('---------------------------------------------'.yellow)
 })
+
+// check dev notes in dev branch for error handling updates
