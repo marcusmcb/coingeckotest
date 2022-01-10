@@ -1,9 +1,8 @@
 import express from 'express'
-import colors from 'colors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cors from 'cors'
-
+import chalk from 'chalk'
 import { getCoins } from './modules/getCoins.js'
 
 dotenv.config()
@@ -18,9 +17,9 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log('---------------------------------------------'.yellow)
-    console.log('*** MongoDB Cluster CONNECTED ***'.magenta)
-    console.log('---------------------------------------------'.yellow)
+    console.log(chalk.green('---------------------------------------------'))
+    console.log(chalk.bgGreen(chalk.black('*** MongoDB Cluster CONNECTED ***')))
+    console.log(chalk.green('---------------------------------------------'))
   })
   // future dev - proper error handling module
   .catch((err) => console.log(err))
@@ -53,7 +52,7 @@ const setCoins = async (coinData) => {
     // future dev - proper error handling module
     await newCoin
       .save()
-      .then(() => console.log('New coin added: '.yellow, coinData[i].name))
+      .then(() => console.log('New coin added: ', chalk.yellow(coinData[i].name)))
   }   
 }
 
@@ -67,19 +66,19 @@ app.get('/', async (req, res) => {
   await setCoins(apiData)
   // query all from collection & return data as response  
   await Coin.find(filter).then(data => {
-    console.log('---------------------------------------------'.yellow)
-    console.log("EXPRESS DATA RETURNED (Sample Below)".green)
-    console.log('---------------------------------------------'.yellow)
+    console.log(chalk.yellow('---------------------------------------------'))
+    console.log(chalk.bgYellow(chalk.black("EXPRESS DATA RETURNED (Sample Below)")))
+    console.log(chalk.yellow('---------------------------------------------'))
     console.log(data[1])
-    console.log('---------------------------------------------'.yellow)
+    console.log(chalk.yellow('---------------------------------------------'))
     res.send(data)
   })   
 })
 
 app.listen(PORT, () => {
-  console.log('---------------------------------------------'.yellow)
-  console.log(`*** Express App listening on PORT ${PORT} ***`.cyan)
-  console.log('---------------------------------------------'.yellow)
+  console.log(chalk.blue('---------------------------------------------'))
+  console.log(chalk.bgBlue(chalk.black(`*** Express App listening on PORT ${PORT} ***`)))
+  console.log(chalk.blue('---------------------------------------------'))
 })
 
 // check dev notes in dev branch for error handling updates

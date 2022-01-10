@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import { clearDb } from './clearDb.js'
+import chalk from 'chalk'
 
 // temp var to hold returned api data
 let coinData = []
@@ -15,13 +16,13 @@ export async function getCoins() {
     for (let i = 0; i < response.length; i++) {
       coinData.push(response[i])
     }
-    console.log('---------------------------------------------'.yellow)
-    console.log('*** API Data Returned ***'.cyan)    
-    console.log('---------------------------------------------'.yellow)
-    console.log("*** SAMPLE DATA BELOW ***".yellow)
-    console.log('---------------------------------------------'.yellow)    
+    console.log(chalk.magenta('---------------------------------------------'))
+    console.log(chalk.magenta('*** API Data Returned ***'))    
+    console.log(chalk.magenta('---------------------------------------------'))
+    console.log(chalk.bgMagenta(chalk.black("*** SAMPLE DATA BELOW ***")))
+    console.log(chalk.magenta('---------------------------------------------'))    
     console.log(coinData[1])
-    console.log('---------------------------------------------'.yellow)
+    console.log(chalk.magenta('---------------------------------------------'))
     return coinData        
   } catch (err) {
     console.log(err)
