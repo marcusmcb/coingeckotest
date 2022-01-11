@@ -32,8 +32,8 @@ const App = () => {
   return (
     <div className='App'>
       {isBusy ? (
-        <div className='loading-body'>          
-          <div className='container alignment'>            
+        <div className='loading-body'>
+          <div className='container alignment'>
             <div className='box alignment'></div>
           </div>
         </div>
@@ -43,9 +43,20 @@ const App = () => {
             <Fragment key={i}>
               <div className='coin-panel'>
                 <p>
-                  {coin.name} | {coin.symbol.toUpperCase()}
+                  {coin.name} ({coin.symbol.toUpperCase()})
                 </p>
                 <p>${coin.current_price.toLocaleString()}</p>
+
+                {coin.price_change_percentage_24h < 0 ? (
+                  <div className='price-down'>
+                    <p>${coin.price_change_percentage_24h.toLocaleString()}</p>
+                  </div>
+                ) : (
+                  <div className='price-up'>
+                    <p>${coin.price_change_percentage_24h.toLocaleString()}</p>
+                  </div>
+                )}
+
                 <img src={coin.image} alt='' />
               </div>
             </Fragment>
