@@ -46,7 +46,6 @@ const App = () => {
                   {coin.name} ({coin.symbol.toUpperCase()})
                 </p>
                 <p>${coin.current_price.toLocaleString()}</p>
-
                 {coin.price_change_percentage_24h === null ? (
                   <p className='data-na'>Data NA</p>
                 ) : coin.price_change_percentage_24h < 0 ? (
@@ -58,8 +57,7 @@ const App = () => {
                     <p>${coin.price_change_percentage_24h.toLocaleString()}</p>
                   </div>
                 )}
-
-                <img src={coin.image} alt='image for this asset' />
+                <img src={coin.image} alt=''/>
               </div>
             </Fragment>
           ))}
