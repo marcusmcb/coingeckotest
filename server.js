@@ -40,6 +40,9 @@ const Coin = mongoose.model('coins', CoinSchema)
 // set token data from API in Mongo collection
 const setCoins = async (coinData) => {
   for (let i = 0; i < 20; i++) {
+    if (coinData[i].price_change_percentage_24h === null) {
+      console.log(chalk.red("NULL VALUE FOUND FOR: ", coinData[i].name))
+    }
     let newCoin = new Coin({      
       symbol: coinData[i].symbol,
       name: coinData[i].name,

@@ -35,6 +35,10 @@ img {
   color: rgb(0, 170, 0) !important;
 }
 
+.data-na {
+  color:rgb(235, 232, 69) !important;
+}
+
 .loading-body {
   margin: 0;
   height: 100vh;
