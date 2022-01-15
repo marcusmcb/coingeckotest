@@ -68,3 +68,9 @@ const App = () => {
 }
 
 export default App
+
+// future dev --
+
+// import component to build sparklines in d3
+// coinData ---> sparkline component (async)
+// await returned sparklines in UI (spinner to start, proper loader later on)
